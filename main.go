@@ -1,6 +1,7 @@
 package main
 
 import (
+	"leargin/routers"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,7 @@ func main() {
 	r := gin.Default()
 
 	//信任代理
-	r.SetTrustedProxies([]string{"192.168.0.102"})
+	r.SetTrustedProxies([]string{"192.168.0.102", "192.168.0.19"})
 
 	// r.GET("/", func(c *gin.Context) {
 	// 	// TODO
@@ -92,5 +93,10 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{"title": "Main website"})
 	})
+
+	//router group
+	routers.AdminRoutersInit(r)
+	routers.ApiRoutersInit(r)
+
 	r.Run(":8080")
 }
